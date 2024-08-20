@@ -3,13 +3,14 @@
 {% block title %}Track/Create Problem{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="container mt-5">
     <h1 class="mb-4">Manage Problems</h1>
     <div class="row">
         <!-- Track Existing Problem Card -->
         <div class="col-md-6 mb-3">
             <div class="card" style="width: 100%; max-width: 1000px; height: 800px;">
-                <img src="https://img.freepik.com/premium-vector/magnifying-glass-illustration-magnifying-glass-search-icon-vector-illustration_597063-283.jpg?w=2000" class="card-img-top" alt="Track Existing Problem" style="height: 50%; object-fit: cover;">
+                <img src="{% static 'index/search.jpg' %}" class="card-img-top" alt="Track Existing Problem" style="height: 50%; object-fit: cover;">
                 <div class="card-body d-flex flex-column" style="height: 50%;">
                     <div class="flex-grow-1">
                         <h5 class="card-title">Track Existing Problem</h5>
@@ -31,7 +32,7 @@
         <!-- Create New Problem Card -->
         <div class="col-md-6 mb-3">
             <div class="card" style="width: 100%; max-width: 1000px; height: 800px;">
-                <img src="https://th.bing.com/th/id/R.335b365e4cad2eb699bc39e34141d540?rik=Ni7QZf4VzkwILQ&riu=http%3a%2f%2fictscorp.com%2fwp-content%2fuploads%2f2013%2f06%2fMan-Holding-Problem-Card1.jpg&ehk=AJJ1BZwQlrGnk2wrO0UGi%2bzqupufs18hu8ff5Fu5Qp8%3d&risl=&pid=ImgRaw&r=0" class="card-img-top" alt="Create New Problem" style="height: 50%; object-fit: cover;">
+                <img src="{% static 'index/Problem.jpg' %}" class="card-img-top" alt="Create New Problem" style="height: 50%; object-fit: cover;">
                 <div class="card-body d-flex flex-column" style="height: 50%;">
                     <div class="flex-grow-1">
                         <h5 class="card-title">Create New Problem</h5>
