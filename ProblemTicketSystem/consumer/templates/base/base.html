@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,61 +7,26 @@
     <title>{% block title %}ProblemTicketSystem{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .hero-section {
-            background-image: url('https://images.unsplash.com/photo-1529243856184-fd5465488984?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fG1hY2hpbmVzfGVufDB8fHx8MTY5MjQ1OTc2Ng&ixlib=rb-1.2.1&q=80&w=1080');
-            background-size: cover;
-            background-position: center;
-            height: 400px;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero-section h1 {
-            font-size: 3rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-        }
-
-        .nav-link, .btn {
-            font-size: 1.1rem;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body class="bg-light">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">ProblemTicketSystem</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Track Existing Problem</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Create New Problem</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary ms-2" href="">Signup</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-secondary ms-2" href="">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+    <!-- Start of header -->
+    {% include 'includes/headfoot/header.html' %}
+    <!-- End of header -->
 
     <!-- Content Block -->
-    <div class="container mt-5">
+    <div class="container content-container mt-5">
+        <br>
         {% block content %}
         {% endblock %}
     </div>
+
+    <!-- Footer -->
+    <!-- Start of footer -->
+    {% include 'includes/headfoot/footer.html' %}
+    <!-- End of footer -->
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

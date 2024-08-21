@@ -1,0 +1,26 @@
+/* static/css/styles.css */
+.hero-section {
+    background-image: url('https://images.unsplash.com/photo-1529243856184-fd5465488984?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fG1hY2hpbmVzfGVufDB8fHx8MTY5MjQ1OTc2Ng&ixlib=rb-1.2.1&q=80&w=1080');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.nav-link, .btn {
+    font-size: 1.1rem;
+}
+
+/* Adjust the margin to account for the fixed header */
+.content-container {
+    margin-top: 70px; /* Adjust based on the height of your fixed header */
+}
