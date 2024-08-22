@@ -9,53 +9,45 @@
         <h1 class="mb-4 text-center">Create and Manage Problem Tickets</h1>
     </div>    
     <div class="row">
-        <!-- Track Existing Problem Card -->
+        {% if data %}
+        {% for item in data %}
+        <!-- Card for each problem option -->
         <div class="col-md-6 mb-3">
             <div class="card" style="width: 100%; max-width: 1000px; height: 800px;">
-                <img src="{% static 'index/search.jpg' %}" class="card-img-top" alt="Track Existing Problem" style="height: 50%; object-fit: cover;">
+                <img src="{% static 'index/'|add:item.image %}" class="card-img-top" alt="{{ item.title }}" style="height: 50%; object-fit: cover;">
                 <div class="card-body d-flex flex-column" style="height: 50%;">
                     <div class="flex-grow-1">
-                        <h5 class="card-title">Track Existing Problem</h5>
-                        <p class="card-text">Enter your problem ID to track the status of your issue.</p>
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <p class="card-text">{{ item.description }}</p>
                         <form>
                             <div class="mb-3">
-                                <label for="problemID" class="form-label">Problem ID</label>
-                                <input type="text" class="form-control" id="problemID" placeholder="Enter Problem ID">
+                                <label for="inputField{{ forloop.counter }}" class="form-label">{{ item.pit }}</label>
+                                <input type="text" class="form-control" id="inputField{{ forloop.counter }}" placeholder="{{ item.epit }}">
                             </div>
+                            {% if item.description_field %}
+                            <div class="mb-3">
+                                <label for="description{{ forloop.counter }}" class="form-label">{{ item.description_field }}</label>
+                                <textarea class="form-control" id="description{{ forloop.counter }}" rows="4" placeholder="{{ item.edescription }}"></textarea>
+                            </div>
+                            {% endif %}
                         </form>
                     </div>
                     <div class="mt-auto">
-                        <button type="submit" class="btn btn-primary">Track Problem</button>
+                        <!-- Button with unique URLs for each card -->
+                        {% if forloop.counter == 1 %}
+                            <a href="/track-problem" class="btn btn-primary">{{ item.button }}</a> <!-- #1 -->
+                        {% elif forloop.counter == 2 %}
+                            <a href="/create-problem" class="btn btn-primary">{{ item.button }}</a> <!-- #2 -->
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
+        {% else %}
+        <p>No data available or website is in maintainance please contact your administrator</p>
+        {% endif %}
 
-        <!-- Create New Problem Card -->
-        <div class="col-md-6 mb-3">
-            <div class="card" style="width: 100%; max-width: 1000px; height: 800px;">
-                <img src="{% static 'index/Problem.jpg' %}" class="card-img-top" alt="Create New Problem" style="height: 50%; object-fit: cover;">
-                <div class="card-body d-flex flex-column" style="height: 50%;">
-                    <div class="flex-grow-1">
-                        <h5 class="card-title">Create New Problem</h5>
-                        <p class="card-text">Describe your issue in detail and submit it to get assistance.</p>
-                        <form>
-                            <div class="mb-3">
-                                <label for="problemTitle" class="form-label">Problem Title</label>
-                                <input type="text" class="form-control" id="problemTitle" placeholder="Enter Title">
-                            </div>
-                            <div class="mb-3">
-                                <label for="problemDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="problemDescription" rows="4" placeholder="Describe the issue"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="mt-auto">
-                        <button type="submit" class="btn btn-primary">Submit Problem</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}

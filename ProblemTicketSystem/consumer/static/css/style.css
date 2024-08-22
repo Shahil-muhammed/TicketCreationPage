@@ -24,3 +24,9 @@
 .content-container {
     margin-top: 70px; /* Adjust based on the height of your fixed header */
 }
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
