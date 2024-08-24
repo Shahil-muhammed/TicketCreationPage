@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ data.title }}</h5>
+        <p class="card-text"><strong>Description:</strong> {{ data.description }}</p>
+        
+        <p class="card-text">
+            <strong>Status:</strong> 
+            <span class="badge {{ data.status_class }}">
+                {{ data.status }}
+            </span>
+        </p>
+        
+        <p class="card-text"><strong>Action:</strong> {{ data.action }}</p>
+    </div>
+</div>
+<br><br><br><br><br><br><br>

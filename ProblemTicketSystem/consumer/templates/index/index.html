@@ -34,21 +34,22 @@
                     </div>
                     <div class="mt-auto">
                         <!-- Button with unique URLs for each card -->
-                        {% if forloop.counter == 1 %}
-                            <a href="/track-problem" class="btn btn-primary">{{ item.button }}</a> <!-- #1 -->
-                        {% elif forloop.counter == 2 %}
-                            <a href="/create-problem" class="btn btn-primary">{{ item.button }}</a> <!-- #2 -->
-                        {% endif %}
+                        <button onclick="trackProblem({{ forloop.counter }})" class="btn btn-primary">{{ item.button }}</button>
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
         {% else %}
-        <p class="nodat">No data available or website is in maintainance please contact your administrator</p>
+        <p class="nodat">No data available or website is in maintenance please contact your administrator</p>
         <br><br><br><br><br><br><br><br><br><br><br><br>
         {% endif %}
-
     </div>
 </div>
+<!-- Define the base URL for problem view -->
+<script>
+    var problemUrl = "{% url 'problem' pid='0' %}";
+</script>
+<!-- Include the JavaScript file -->
+<script src="{% static 'javascript/track.js' %}"></script>
 {% endblock %}

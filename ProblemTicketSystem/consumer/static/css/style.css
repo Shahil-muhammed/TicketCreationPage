@@ -33,3 +33,39 @@ p.nodat
 {
     text-align: center;
 }
+.badge {
+    display: inline-block;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.bg-warning {
+    background-color: #ffc107;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+}
+
+.bg-success {
+    background-color: #28a745;
+}
+
+.bg-secondary {
+    background-color: #6c757d;
+}
+
+.text-dark {
+    color: #343a40;
+}
+
+.text-white {
+    color: #fff;
+}
