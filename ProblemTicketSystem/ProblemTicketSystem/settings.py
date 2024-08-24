@@ -23,9 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-oiwud29=j_e*4!y$==yw$bc6vg!e$2d=7_nv$@u0*yvn**ru6h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -52,10 +55,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ProblemTicketSystem.urls'
 
+# settings.py
+
+# TEMPLATES configuration in settings.py
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Adjust this to the global templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

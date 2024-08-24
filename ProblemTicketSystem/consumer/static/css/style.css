@@ -26,7 +26,10 @@
 }
 
 .fixed-footer {
-    position: fixed;
     bottom: 0;
     width: 100%;
+}
+p.nodat
+{
+    text-align: center;
 }
