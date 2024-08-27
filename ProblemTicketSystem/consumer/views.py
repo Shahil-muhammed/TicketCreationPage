@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import logging
 # Ensure this is defined at the top of your views.py
 problem_list = [
     {
@@ -51,6 +52,8 @@ def problem(request, pid):
         return HttpResponse("Invalid Problem ID", status=400)
     
     result = next((item for item in problem_list if item['id'] == pid), None)
+    logger = logging.getLogger("TESTING")
+    logger.debug(f'variable value is {result}')
     
     if result:
         # Assign status class based on the problem status
