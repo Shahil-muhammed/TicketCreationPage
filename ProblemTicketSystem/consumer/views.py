@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages  # Import the messages framework
 import logging
-# Ensure this is defined at the top of your views.py
+from .forms import TicketForm
+
+# Simulated data for testing
 problem_list = [
     {
         'id': 123,
@@ -21,6 +24,21 @@ problem_list = [
 
 # Create your views here.
 def index(request):
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            new_ticket = form.save()  # Save the form data to the database
+
+            # Add a success message with the ticket number
+            messages.success(
+                request,
+                f'Problem is now notified to the admin. Please note the ticket number for further reference. Your ticket number is "{new_ticket.ticket_number}".'
+            )
+            
+            return redirect('index')  # Redirect to the index page after saving
+    else:
+        form = TicketForm()
+    
     data = [
         {
             'title': 'Track Existing Problem',
@@ -43,7 +61,7 @@ def index(request):
         }
     ]
 
-    return render(request, 'index/index.html', {'data': data})
+    return render(request, 'index/index.html', {'data': data, 'form': form})
 
 def problem(request, pid):
     try:
@@ -56,16 +74,19 @@ def problem(request, pid):
     logger.debug(f'variable value is {result}')
     
     if result:
-        # Assign status class based on the problem status
-        if result['status'] == 'under investigation':
-            result['status_class'] = 'bg-warning text-dark'
-        elif result['status'] == 'rejected':
-            result['status_class'] = 'bg-danger text-white'
-        elif result['status'] == 'resolved':
-            result['status_class'] = 'bg-success text-white'
-        else:
-            result['status_class'] = 'bg-secondary text-white'
+        # Determine status class based on the problem status
+        result['status_class'] = get_status_class(result['status'])
     else:
         result = {}  # Ensure result is an empty dictionary if no data found
     
     return render(request, 'track/trackingdata.html', {'data': result})
+
+def get_status_class(status):
+    if status == 'under investigation':
+        return 'bg-warning text-dark'
+    elif status == 'rejected':
+        return 'bg-danger text-white'
+    elif status == 'resolved':
+        return 'bg-success text-white'
+    else:
+        return 'bg-secondary text-white'

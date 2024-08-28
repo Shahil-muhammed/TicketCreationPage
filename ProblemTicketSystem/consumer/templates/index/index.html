@@ -4,6 +4,20 @@
 
 {% block content %}
 {% load static %}
+
+<!-- Display messages -->
+{% if messages %}
+    <div class="container mt-4">
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
 <div class="container mt-5">
     <div class="container d-flex justify-content-center align-items-center">
         <h1 class="mb-4 text-center">Create and Manage Problem Tickets</h1>
@@ -19,33 +33,37 @@
                     <div class="flex-grow-1">
                         <h5 class="card-title">{{ item.title }}</h5>
                         <p class="card-text">{{ item.description }}</p>
+                        {% if item.title == 'Create New Problem' %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }} <!-- Renders the form fields dynamically -->
+                            <button type="submit" class="btn btn-primary">{{ item.button }}</button>
+                        </form>
+                        {% else %}
                         <form>
                             <div class="mb-3">
                                 <label for="inputField{{ forloop.counter }}" class="form-label">{{ item.pit }}</label>
                                 <input type="text" class="form-control" id="inputField{{ forloop.counter }}" placeholder="{{ item.epit }}">
                             </div>
-                            {% if item.description_field %}
-                            <div class="mb-3">
-                                <label for="description{{ forloop.counter }}" class="form-label">{{ item.description_field }}</label>
-                                <textarea class="form-control" id="description{{ forloop.counter }}" rows="4" placeholder="{{ item.edescription }}"></textarea>
-                            </div>
-                            {% endif %}
                         </form>
+                        {% endif %}
                     </div>
                     <div class="mt-auto">
                         <!-- Button with unique URLs for each card -->
+                        {% if item.title != 'Create New Problem' %}
                         <button onclick="trackProblem({{ forloop.counter }})" class="btn btn-primary">{{ item.button }}</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
         {% else %}
-        <p class="nodat">No data available or website is in maintenance please contact your administrator</p>
-        <br><br><br><br><br><br><br><br><br><br><br><br>
+        <p class="nodat">No data available or website is in maintenance. Please contact your administrator</p>
         {% endif %}
     </div>
 </div>
+
 <!-- Define the base URL for problem view -->
 <script>
     var problemUrl = "{% url 'problem' pid='0' %}";
