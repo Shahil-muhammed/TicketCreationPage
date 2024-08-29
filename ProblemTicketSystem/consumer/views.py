@@ -1,26 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.contrib import messages  # Import the messages framework
+from django.contrib import messages
 import logging
+from .models import Ticket  # Import your Ticket model
 from .forms import TicketForm
-
-# Simulated data for testing
-problem_list = [
-    {
-        'id': 123,
-        'title': 'First issue 123 fetched successfully',
-        'description': 'Bad behaviour from restaurant employee named x, he has misbehaved with me many times',
-        'status': 'under investigation',
-        'action': 'We will suspend the employee if any issues are found'
-    },
-    {
-        'id': 456,
-        'title': 'Second issue 456 fetched successfully',
-        'description': 'Bad behaviour from restaurant employee named y, he is misbehaving with me many times',
-        'status': 'rejected',
-        'action': 'No suspicious activities found during CCTV investigation'
-    }
-]
 
 # Create your views here.
 def index(request):
@@ -67,18 +50,33 @@ def problem(request, pid):
     try:
         pid = int(pid)  # Convert pid to an integer
     except ValueError:
-        return HttpResponse("Invalid Problem ID", status=400)
+        messages.error(request, "Invalid Problem ID. Please enter a valid number.")
+        return redirect('index')  # Redirect to index or a custom error page
     
-    result = next((item for item in problem_list if item['id'] == pid), None)
-    logger = logging.getLogger("TESTING")
-    logger.debug(f'variable value is {result}')
+    try:
+        # Fetch the ticket from the database using the Ticket model
+        ticket = Ticket.objects.get(ticket_number=pid)
+        logger = logging.getLogger("TESTING")
+        logger.debug(f'Fetched ticket: {ticket}')
+        
+        # Determine status class based on the ticket's status
+        status_class = get_status_class(ticket.department)  # Adjust if department is used for status
+        
+        # Prepare the data dictionary for the template
+        result = {
+            'id': ticket.id,
+            'title': ticket.title,
+            'description': ticket.description,
+            'status': ticket.department,  # Assuming 'department' is being used as a status
+            'action': 'Action details here',  # Replace with actual action if you have such a field
+            'status_class': status_class
+        }
     
-    if result:
-        # Determine status class based on the problem status
-        result['status_class'] = get_status_class(result['status'])
-    else:
-        result = {}  # Ensure result is an empty dictionary if no data found
-    
+    except Ticket.DoesNotExist:
+        # Set result to None or empty dictionary if no ticket is found
+        messages.error(request, "Problem ID does not exist. Please check the ID and try again.")
+        result = {}  
+        
     return render(request, 'track/trackingdata.html', {'data': result})
 
 def get_status_class(status):
