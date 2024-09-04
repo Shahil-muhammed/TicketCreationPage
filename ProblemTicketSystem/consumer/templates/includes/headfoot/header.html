@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">ProblemTicketSystem</a>
@@ -5,13 +7,26 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="btn btn-primary ms-2" href="">Signup</a>
+            <ul class="navbar-nav ms-auto align-items-center">
+                {% if uname %}
+                <li class="nav-item d-flex align-items-center">
+                    <!-- Profile Avatar -->
+                    <div class="position-relative">
+                        <img src="{% static 'image/avatar.png' %}" alt="Profile Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+                        <!-- Online Indicator -->
+                        <span class="position-absolute bottom-0 end-0 p-1 bg-success border border-light rounded-circle" style="width: 10px; height: 10px;"></span>
+                    </div>
+                    <!-- Username -->
+                    <span class="text-white ms-2">{{ uname }}</span>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-secondary ms-2" href="">Login</a>
+                    <a class="btn btn-outline-light ms-3" href="/logout">Logout</a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <p class="text-white">Username not found</p>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -9,7 +9,8 @@ class Ticket(models.Model):
     description = models.TextField()
     ticket_number = models.IntegerField(null=True, blank=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    ticket_status = models.CharField(max_length=100 , default='pending')
+    
     def __str__(self):
         return self.title
 

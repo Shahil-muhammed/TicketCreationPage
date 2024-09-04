@@ -18,6 +18,7 @@
     </div>
 {% endif %}
 
+{% if uname != 'admin' %}
 <div class="container mt-5">
     <div class="container d-flex justify-content-center align-items-center">
         <h1 class="mb-4 text-center">Create and Manage Problem Tickets</h1>
@@ -63,11 +64,11 @@
         {% endif %}
     </div>
 </div>
+{% else %}
+<div class="container mt-5">
+    <h1>As an admin why are you accessing this user page?</h1>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+{% endif %}
 
-<!-- Define the base URL for problem view -->
-<script>
-    var problemUrl = "{% url 'problem' pid='0' %}";
-</script>
-<!-- Include the JavaScript file -->
-<script src="{% static 'javascript/track.js' %}"></script>
 {% endblock %}

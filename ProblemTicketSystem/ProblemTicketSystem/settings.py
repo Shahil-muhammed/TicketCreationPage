@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'consumer',
+    'control',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,7 @@ LOGGING = {
         "level": "DEBUG",
     },
 }
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/signin/'  # Use your custom sign-in URL
