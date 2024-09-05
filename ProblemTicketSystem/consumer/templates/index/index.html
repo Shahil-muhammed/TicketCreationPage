@@ -5,6 +5,11 @@
 {% block content %}
 {% load static %}
 
+<script src="{% static 'javascript/track.js' %}"></script>
+<script>
+    var problemUrl = "{% url 'problem' pid='0' %}";
+</script>
+
 <!-- Display messages -->
 {% if messages %}
     <div class="container mt-4">
@@ -50,9 +55,9 @@
                         {% endif %}
                     </div>
                     <div class="mt-auto">
-                        <!-- Button with unique URLs for each card -->
+                        <!-- Button with JavaScript function call -->
                         {% if item.title != 'Create New Problem' %}
-                        <button onclick="trackProblem({{ forloop.counter }})" class="btn btn-primary">{{ item.button }}</button>
+                        <button onclick="issue('1')" class="btn btn-primary">{{ item.button }}</button>
                         {% endif %}
                     </div>
                 </div>
@@ -72,3 +77,5 @@
 {% endif %}
 
 {% endblock %}
+
+

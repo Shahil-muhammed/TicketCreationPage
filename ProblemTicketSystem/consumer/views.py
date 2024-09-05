@@ -73,7 +73,7 @@ def problem(request, pid):
         
         # Determine status class based on the ticket's status
         status_class = get_status_class(ticket.ticket_status)  # Adjust if department is used for status
-        
+        username = request.user.username if request.user.is_authenticated else None
         # Prepare the data dictionary for the template
         result = {
             'id': ticket.id,
@@ -89,7 +89,7 @@ def problem(request, pid):
         messages.error(request, "Problem ID does not exist. Please check the ID and try again.")
         result = {}  
         
-    return render(request, 'track/trackingdata.html', {'data': result})
+    return render(request, 'track/trackingdata.html', {'data': result , 'uname':username})
 
 def get_status_class(status): 
     if status == 'pending':
