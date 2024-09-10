@@ -1,0 +1,14 @@
+<div class="container d-flex justify-content-between align-items-center">
+    <h1 class="h3">Admin Panel - Manage Tickets</h1>
+
+    <!-- Check if data exists -->
+    <div class="d-flex align-items-center">
+        {% if data %}
+            <span class="text-success me-3">Welcome, {{ data }}</span>
+            <!-- Logout Button -->
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        {% else %}
+            <span class="text-danger">Error</span>
+        {% endif %}
+    </div>
+</div>
