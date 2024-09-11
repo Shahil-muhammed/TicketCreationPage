@@ -19,7 +19,7 @@ from django.contrib.auth.forms import AuthenticationForm
 # Create your views here.
 def index(request):
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST, user=request.user)
         if form.is_valid():
             new_ticket = form.save()  # Save the form data to the database
 

@@ -1,15 +1,26 @@
 {% extends "Abase/base.html" %}
-
 {% block body %}
-<div class="card">
-    <div class="card-header">
-      Featured
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
-{% include "include/br/br.html" %}
+    {% if page_obj %}
+        <!-- Start of the row -->
+        <div class="row">
+            <!-- Loop through each paginated item -->
+            {% for det in page_obj %}
+                <div class="col-md-6 mb-4">
+                    {% include "include/card/card.html" %}
+                </div>
+                {% if forloop.counter|divisibleby:2 and not forloop.last %}
+                    <!-- Close and start a new row every 2 cards, except after the last card -->
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination Controls -->
+        {% include "include/paginator/paginator.html" %}
+        
+    {% else %}
+        <!-- No Data Section -->
+        {% include "include/nodata/nodata.html" %}
+        {% include "include/br/br.html" %}
+    {% endif %}
 {% endblock body %}

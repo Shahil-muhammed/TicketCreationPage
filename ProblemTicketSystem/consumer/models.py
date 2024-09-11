@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
 from django.dispatch import receiver
 import random
 
 class Ticket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     title = models.CharField(max_length=300)
     department = models.CharField(max_length=100, default='Unassigned')
     description = models.TextField()
