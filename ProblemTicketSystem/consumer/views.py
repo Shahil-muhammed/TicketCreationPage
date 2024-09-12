@@ -61,18 +61,29 @@ def index(request):
 def problem(request, pid):
     try:
         pid = int(pid)  # Convert pid to an integer
-        ticket=Ticket.objects.filter(id=pid).exists()
-        if not ticket:
-            raise ValueError("Ticket not found.")
     except ValueError:
+        # Handle invalid problem ID if it's not an integer
         messages.error(request, "Invalid Problem ID. Please enter a valid number.")
         return redirect('index')
     
-    ticket = get_object_or_404(Ticket, ticket_number=pid)
+    if not Ticket.objects.filter(ticket_number=pid).exists():
+        # If the ticket does not exist, return a custom error message or redirect
+        messages.error(request, "Problem ID does not exist. Please check the ID and try again.")
+        return redirect('index')
+    # Fetch the ticket or return a 404 if it doesn't exist
+    ticket = get_object_or_404(Ticket, ticket_number=pid)  # Use 'ticket_number', assuming 'pid' is actually the ticket_number
+    
+    # Log the fetched ticket
     logger = logging.getLogger("TESTING")
     logger.debug(f'Fetched ticket: {ticket}')
+    
+    # Determine the status class based on ticket status
     status_class = get_status_class(ticket.ticket_status)
+    
+    # Get the username of the logged-in user, if authenticated
     username = request.user.username if request.user.is_authenticated else None
+    
+    # Prepare the result data for the template
     result = {
         'id': ticket.id,
         'title': ticket.title,
