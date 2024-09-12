@@ -1,14 +1,29 @@
+
+{% load static %}
+<script src={% static "/js/conf.js" %}>
+</script>
 <div class="container d-flex justify-content-between align-items-center">
-    <h1 class="h3">Admin Panel - Manage Tickets</h1>
+    <h1 class="h3 mb-0">Admin Panel - Manage Tickets</h1>
 
     <!-- Check if data exists -->
     <div class="d-flex align-items-center">
         {% if data %}
-            <span class="text-success me-3">Welcome, {{ data }}</span>
-            <!-- Logout Button -->
-            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+            <span class="text-muted me-3">Welcome, <strong>{{ data }}</strong></span>
+            
+            <!-- Solved Tickets Link -->
+            <a href="{% url "control:solved" %}" class="text-decoration-none me-4 text-primary">Solved Tickets</a>
+            
+            <!-- Pending Tickets Link -->
+            <a href="{% url 'control:SecondAdmin' %}" class="text-decoration-none me-4 text-warning">Pending Tickets</a>
+            
+            <!-- Logout Link with Confirmation -->
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger fw-bold" onclick="return confirmLogout()">
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+            </a>
         {% else %}
             <span class="text-danger">Error</span>
         {% endif %}
     </div>
 </div>
+
+

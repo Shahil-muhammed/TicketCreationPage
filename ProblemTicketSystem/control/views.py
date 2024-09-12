@@ -7,24 +7,32 @@ from consumer.models import Ticket
 from django.core.paginator import Paginator
 import logging
 
-@login_required  # Ensures the user is logged in
+@login_required  
 def SecondAdmin(request):
     if request.user.is_authenticated and request.user.username == 'admin':
         username = "Muhammed Shahil KP"
-        Uticket = Ticket.objects.all()
-        
-        # Pagination: Show 2 tickets per page (we can adjust as needed)
-        paginator = Paginator(Uticket, 2)
-        # Get the current page number from the URL query parameter '?page='
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-
-        # Logging
-        logger = logging.getLogger("TESTING")
-        logger.debug(f'Fetched ticket: {Uticket}')
-
-        # Render the page with paginated tickets
-        return render(request, 'Aindex/aindex.html', {'data': username, 'page_obj': page_obj})
+        Uticket = Ticket.objects.filter(ticket_status="pending")
+        if Uticket.exists():
+            paginator = Paginator(Uticket, 2)  # Pagination
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            return render(request, 'Aindex/aindex.html', {'page_obj': page_obj, 'data': username})
+        else:
+            return HttpResponse("No Pending status found ")
     else:
-        # If not authorized, redirect to an error page or display a message
+        return HttpResponse("You are not authorized to access this page.", status=403)
+    
+@login_required
+def solved(request):
+    if request.user.is_authenticated and request.user.username == 'admin':
+        username = "Muhammed Shahil KP"
+        Uticket = Ticket.objects.filter(ticket_status="resolved")
+        if Uticket.exists():
+            paginator = Paginator(Uticket, 2)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            return render(request, 'Aindex/aindex.html', {'data': username, 'page_obj': page_obj})
+        else:
+            return HttpResponse("No resolved tickets found.", status=404)
+    else:
         return HttpResponse("You are not authorized to access this page.", status=403)

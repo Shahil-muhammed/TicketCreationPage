@@ -61,35 +61,28 @@ def index(request):
 def problem(request, pid):
     try:
         pid = int(pid)  # Convert pid to an integer
+        ticket=Ticket.objects.filter(id=pid).exists()
+        if not ticket:
+            raise ValueError("Ticket not found.")
     except ValueError:
         messages.error(request, "Invalid Problem ID. Please enter a valid number.")
-        return redirect('index')  # Redirect to index or a custom error page
+        return redirect('index')
     
-    try:
-        # Fetch the ticket from the database using the Ticket model
-        ticket = Ticket.objects.get(ticket_number=pid)
-        logger = logging.getLogger("TESTING")
-        logger.debug(f'Fetched ticket: {ticket}')
-        
-        # Determine status class based on the ticket's status
-        status_class = get_status_class(ticket.ticket_status)  # Adjust if department is used for status
-        username = request.user.username if request.user.is_authenticated else None
-        # Prepare the data dictionary for the template
-        result = {
-            'id': ticket.id,
-            'title': ticket.title,
-            'description': ticket.description,
-            'status': ticket.ticket_status,  # Assuming 'department' is being used as a status
-            'action': 'Action details here',  # Replace with actual action if you have such a field
-            'status_class': status_class
-        }
-    
-    except Ticket.DoesNotExist:
-        # Set result to None or empty dictionary if no ticket is found
-        messages.error(request, "Problem ID does not exist. Please check the ID and try again.")
-        result = {}  
-        
-    return render(request, 'track/trackingdata.html', {'data': result , 'uname':username})
+    ticket = get_object_or_404(Ticket, ticket_number=pid)
+    logger = logging.getLogger("TESTING")
+    logger.debug(f'Fetched ticket: {ticket}')
+    status_class = get_status_class(ticket.ticket_status)
+    username = request.user.username if request.user.is_authenticated else None
+    result = {
+        'id': ticket.id,
+        'title': ticket.title,
+        'description': ticket.description,
+        'status': ticket.ticket_status,
+        'action': 'Action details here',
+        'status_class': status_class
+    }
+
+    return render(request, 'track/trackingdata.html', {'data': result, 'uname': username})
 
 def get_status_class(status): 
     if status == 'pending':
