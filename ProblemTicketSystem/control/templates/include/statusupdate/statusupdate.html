@@ -1,0 +1,29 @@
+<form method="post" action="{% url "control:problemview" ticket.ticket_number %}"> 
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="status" class="form-label"><strong>Update Status:</strong></label>
+        <select id="status" name="status" class="form-select">
+            <option value="pending" {% if ticket.ticket_status == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="assigned" {% if ticket.ticket_status == 'assigned' %}selected{% endif %}>Assigned</option>
+            <option value="resolved" {% if ticket.ticket_status == 'resolved' %}selected{% endif %}>Resolved</option>
+            <option value="rejected" {% if ticket.ticket_status == 'rejected' %}selected{% endif %}>Rejected</option>
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="description" class="form-label"><strong>Description:</strong></label>
+        <p id="description" name="description" class="form-control" rows="4" placeholder="Provide an explanation...">{{ ticket.description }}</p>
+    </div>
+    
+    {% if ticket.ticket_status == 'resolved' %}
+    <p> Its a resolved Ticket Congrats </p>
+    {% else %}
+    <div class="mb-3">
+        <label for="actiontaken" class="form-label"><strong>Action Taken:</strong></label>
+        <textarea id="actiontaken" name="actiontaken" class="form-control" rows="4" placeholder="Provide an explanation...">{{ ticket.action_taken }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-outline-light">Update</button>
+    {% endif %}
+</form>

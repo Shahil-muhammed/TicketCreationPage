@@ -1,0 +1,70 @@
+<div class="container mt-5">
+    <div class="card mb-4 shadow-lg border-0 rounded-3" style="background-color: #2c2c2c; color: #f8f9fa;">
+        <div class="card-header text-white" style="background-color: #1b1b1b;">
+            <h5 class="mb-0 d-flex justify-content-center align-items-center">
+                <i class="fas fa-ticket-alt me-2"></i>
+                {{ ticket.title }}
+            </h5>
+        </div>
+        
+        <div class="card-body text-white">
+            <div class="mb-3">
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-user me-2"></i> Department:</strong> {{ ticket.department }}
+                </p>
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-user me-2"></i> Problem Creator:</strong> {{ ticket.user }}
+                </p>
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-hashtag me-2"></i> Ticket Number:</strong> {{ ticket.ticket_number }}
+                </p>
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-calendar-alt me-2"></i> Created At:</strong> 
+                    {{ ticket.created_at|date:"F j, Y, g:i a" }}
+                </p>
+            </div>
+
+            <div class="text-center mb-4">
+                <p class="card-text">
+                    <strong><i class="fas fa-exclamation-circle me-2"></i> Status:</strong> 
+                    <span class="badge 
+                        {% if ticket.ticket_status == 'pending' %}bg-warning text-dark
+                        {% elif ticket.ticket_status == 'resolved' %}bg-success text-white
+                        {% elif ticket.ticket_status == 'assigned' %}bg-primary text-white
+                        {% elif ticket.ticket_status == 'rejected' %}bg-danger text-white
+                        {% else %}bg-secondary text-white
+                        {% endif %}">
+                        {{ ticket.ticket_status }}
+                    </span>
+                </p>
+            </div>
+
+            <!-- Show additional details if status is not 'pending' -->
+            {% if ticket.ticket_status != 'pending' %}
+            <div class="mb-3">
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-user-edit me-2"></i> Last Updated By:</strong> 
+                    {% if ticket.last_updated_by.username == "admin" %}
+                        Muhammed Shahil KP
+                    {% else %}
+                        {{ ticket.last_updated_by }}
+                    {% endif %}
+
+
+                </p>
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-calendar-check me-2"></i> Last Updated At:</strong> 
+                    {% if ticket.updated_at %}
+                        {{ ticket.updated_at_ist|date:"F j, Y, g:i a" }} IST
+                    {% else %}
+                        Time not available
+                    {% endif %}
+                </p>
+                
+                
+                
+                <p class="card-text mb-2">
+                    <strong><i class="fas fa-pencil-alt me-2"></i> Action Taken:</strong> {{ ticket.action_taken|default:"None" }}
+                </p>
+            </div>
+            {% endif %}

@@ -12,7 +12,12 @@ class Ticket(models.Model):
     ticket_number = models.IntegerField(null=True, blank=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     ticket_status = models.CharField(max_length=100 , default='pending')
-    
+    last_updated_by = models.ForeignKey(User, related_name='updated_tickets', on_delete=models.PROTECT, null=True, blank=True)
+    #by using protect field if we try to delete a user who is related to that ticket , django will protect it 
+    #like it will raise an ,protection error and keep that use remains till h  e is no more associated with that ticket 
+    updated_at = models.DateTimeField(auto_now=True)  # Automatically set to now on every update
+    action_taken = models.TextField(null=True,default="No action taken yet")
+
     def __str__(self):
         return self.title
 
