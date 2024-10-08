@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigner Signup</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('https://source.unsplash.com/1600x900/?teamwork'); /* Background Image */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff; /* Text color for better contrast */
+        }
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 300px;
+            text-align: center; /* Center text */
+        }
+        h2 {
+            margin-bottom: 20px; /* Space below the title */
+            color: #333;
+            font-size: 24px; /* Slightly larger font size */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 20px; /* Increased space between fields */
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input {
+            padding: 12px; /* Increased padding */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s; /* Smooth border color transition */
+        }
+        .form-group input:focus {
+            border-color: #5cb85c; /* Change border color on focus */
+            outline: none; /* Remove outline */
+        }
+        button {
+            padding: 12px; /* Increased padding */
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px; /* Slightly larger font size */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        /* Optional: Add some responsive design */
+        @media (max-width: 400px) {
+            .signup-container {
+                width: 90%; /* Full width on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Assigner Signup</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</body>
+</html>

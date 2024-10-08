@@ -1,10 +1,14 @@
-<div class="card">
+<br><br><br>
+
+<div class="card mb-4 shadow-lg">
+    <div class="card-header badge {{ data.status_class }} text-white">
+        <h5 class="card-title mb-0">{{ data.title }}</h5>
+    </div>
     <div class="card-body">
-        <h5 class="card-title">{{ data.title }}</h5>
         <p class="card-text"><strong>Description:</strong> {{ data.description }}</p>
         
         <p class="card-text">
-            <strong>Status:</strong> 
+            <strong>Status: </strong> 
             <span class="badge {{ data.status_class }}">
                 {{ data.status }}
             </span>
@@ -12,5 +16,9 @@
         
         <p class="card-text"><strong>Action:</strong> {{ data.action }}</p>
     </div>
+    <div class="card-footer text-muted">
+        <small>Last updated: {{ data.last_updated }}</small>
+    </div>
 </div>
-<br><br><br><br><br><br><br>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

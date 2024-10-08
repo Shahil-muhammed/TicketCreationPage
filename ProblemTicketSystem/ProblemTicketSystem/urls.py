@@ -6,6 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('consumer.urls')),  # Includes consumer app URLs
     path('secondadmin/', include('control.urls')),  # Includes control app URLs
+    path('vendor/',include('assigner.urls')),
 ]
 
 # Custom 404 handler

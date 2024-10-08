@@ -1,0 +1,27 @@
+<form method="post" action="{% url "assigner:viewprob" ticket.ticket_number %}"> 
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="status" class="form-label"><strong>Update Status:</strong></label>
+        <select id="status" name="status" class="form-select">
+            <option value="lsolved" {% if ticket.ticket_status == 'assigned' %}selected{% endif %}>Lsolved</option>
+            <option value="rejected" {% if ticket.ticket_status == 'rejected' %}selected{% endif %}>Rejected</option>
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="description" class="form-label"><strong>Description:</strong></label>
+        <p id="description" name="description" class="form-control" rows="4" placeholder="Provide an explanation...">{{ ticket.description }}</p>
+    </div>
+    
+    {% if ticket.ticket_status == 'resolved' %}
+    <p> Its a resolved Ticket Congrats </p>
+    {% else %}
+    <div class="mb-3">
+        <label for="actiontaken" class="form-label"><strong>Action Taken:</strong></label>
+        <textarea id="actiontaken" name="actiontaken" class="form-control" rows="4" placeholder="Provide an explanation...">{{ ticket.action_taken }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-outline-light">Update</button>
+    {% endif %}
+</form>

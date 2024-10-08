@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,22 +10,50 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS (optional) -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .toggle-container {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+
+        .form-container {
+            position: relative;
+        }
+
+        .form-container .toggle-switch {
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
+
 <body class="bg-light">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                <!-- Toggle Switch -->
+                <div class="toggle-container">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="modeToggle">
+                        <label class="form-check-label" for="modeToggle">Toggle Mode</label>
+                    </div>
+                </div>
+
                 <div class="text-center mb-4">
                     <img src="{% static 'image/avatar.png' %}" alt="Profile Image" class="rounded-circle" style="width: 100px; height: 100px;">
                 </div>
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">Login</h2>
-                        <form method="post">
+
+                        <!-- Form -->
+                        <form id="loginForm" method="post" action="{% url 'consumer:signin' %}">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="id_username" class="form-label">Username:</label>
-                                <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value|default_if_none:'' }}">
+                                <input type="text" name="username" id="id_username" class="form-control"
+                                    value="{{ form.username.value|default_if_none:'' }}">
                             </div>
                             <div class="mb-3">
                                 <label for="id_password" class="form-label">Password:</label>
@@ -32,15 +61,34 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
+
+                        <!-- Signup Button -->
                         <div class="text-center mt-3">
-                            <a href="{% url 'signup' %}" class="btn btn-secondary w-100">Sign Up</a>
+                            <a href="{% url 'consumer:signup' %}" class="btn btn-secondary w-100">Sign Up</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script to redirect based on toggle state -->
+    <script>
+        const modeToggle = document.getElementById('modeToggle');
+
+        modeToggle.addEventListener('change', function () {
+            if (this.checked) {
+                // Toggle is ON - redirect to "assigner:assigner-login"
+                window.location.href = "{% url 'assigner:assigner-login' %}";
+            } else {
+                // Toggle is OFF - redirect to "consumer:signin"
+                window.location.href = "{% url 'consumer:signin' %}";
+            }
+        });
+    </script>
 </body>
+
 </html>

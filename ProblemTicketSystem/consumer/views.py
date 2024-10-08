@@ -29,7 +29,7 @@ def index(request):
                 f'Problem is now notified to the admin. Please note the ticket number for further reference. Your ticket number is "{new_ticket.ticket_number}".'
             )
             
-            return redirect('index')  # Redirect to the index page after saving
+            return redirect('consumer:index')  # Redirect to the index page after saving
     else:
         form = TicketForm()
         username = request.user.username if request.user.is_authenticated else None
@@ -89,7 +89,7 @@ def problem(request, pid):
         'title': ticket.title,
         'description': ticket.description,
         'status': ticket.ticket_status,
-        'action': 'Action details here',
+        'action': ticket.action_taken,
         'status_class': status_class
     }
 
@@ -102,6 +102,8 @@ def get_status_class(status):
         return 'bg-danger text-white'
     elif status == 'resolved':
         return 'bg-success text-white'
+    elif status == 'assigned':
+        return 'bg-primary text-white'
     else:
         return 'bg-secondary text-white'
 
@@ -110,7 +112,7 @@ def get_status_class(status):
 class SignUpView(CreateView):
     form_class = ConsumerSignUpForm
     template_name = 'signup/signup.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('consumer:signin')
 
 # SignIn view for existing users
 
@@ -124,9 +126,10 @@ class SignInView(LoginView):
             return redirect('control:SecondAdmin')  # Redirect to the control app's admin view
         elif user.is_authenticated and user.username != 'admin':
             login(self.request, user)
-            return redirect('index')  # Redirect to consumer app's index view
+            return redirect('consumer:index')  # Redirect to consumer app's index view
         return super().form_valid(form)
     
 def custom_logout(request):
     logout(request)
-    return redirect('index') 
+    return redirect('consumer:index') 
+

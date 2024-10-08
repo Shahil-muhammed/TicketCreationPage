@@ -1,23 +1,35 @@
 {% extends "Abase/base.html" %}
+{% load static %}
+
 {% block body %}
+     <!-- Load the JavaScript -->
+     <script src="{% static 'javascript/conf.js' %}">
+     </script>
+
+     <script>
+        var baseUrl = "{% url 'control:asearch' ticket_id=0 %}";
+      </script>
+    
+     
+ 
+    <!-- Search Form Section -->
+    {% include "include/searchbar/searchbar.html" %}
+
+    <!-- Cards Section -->
     {% if page_obj %}
-        <!-- Start of the row -->
         <div class="row">
-            <!-- Loop through each paginated item -->
             {% for det in page_obj %}
                 <div class="col-md-6 mb-4">
                     {% include "include/card/card.html" %}
                 </div>
                 {% if forloop.counter|divisibleby:2 and not forloop.last %}
-                    <!-- Close and start a new row every 2 cards, except after the last card -->
                     </div><div class="row">
                 {% endif %}
             {% endfor %}
         </div>
-        
+
         <!-- Pagination Controls -->
         {% include "include/paginator/paginator.html" %}
-        
     {% else %}
         <!-- No Data Section -->
         {% include "include/nodata/nodata.html" %}

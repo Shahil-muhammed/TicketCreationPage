@@ -1,0 +1,21 @@
+<br>
+    {% if not local %}
+    
+    <form id="searchForm" class="form-inline justify-content-center mt-4" method="get" onsubmit="return handleFormSubmit(event);">
+        <div class="input-group mx-auto" style="max-width: 500px;">
+            <!-- Add shadow, padding, and rounded corners -->
+            <input type="text" id="ticket_id" name="ticket_id" 
+                   class="form-control rounded-pill shadow-sm px-4" 
+                   placeholder="Enter Ticket ID" aria-label="Enter Ticket ID" 
+                   required>
+            <div class="input-group-append">
+                <!-- Rounded button with a sleek look -->
+                <button class="btn btn-primary rounded-pill shadow-sm" type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% endif %}
+    
